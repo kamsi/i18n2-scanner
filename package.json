@@ -1,0 +1,34 @@
+{
+  "name": "i18n2-scanner",
+  "version": "0.0.0",
+  "description": "Utility for i18n2 getting the translation functions from code",
+  "author": "Kamil Gruca <gruca.kamil@gmail.com>",
+  "keywords": [
+    "i18n",
+		"i18n2",
+		"scanning",
+    "gettext",
+    "internationalization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kamsi/i18n2-scanner.git"
+  },
+  "dependencies": {
+    "d": "~0.1.1",
+    "es5-ext": "~0.10.4",
+    "es6-template-strings": "0.1.x",
+    "esniff": "git://github.com/medikoo/esniff.git"
+  },
+  "devDependencies": {
+    "xlint": "~0.2.1",
+    "xlint-jslint-medikoo": "0.1.x",
+    "tad": "0.2.x"
+  },
+  "scripts": {
+    "lint": "node node_modules/xlint/bin/xlint --linter=node_modules/xlint-jslint-medikoo/index.js --no-cache --no-stream",
+    "lint-console": "node node_modules/xlint/bin/xlint --linter=node_modules/xlint-jslint-medikoo/index.js --watch",
+    "test": "node node_modules/tad/bin/tad"
+  },
+  "license": "MIT"
+}
