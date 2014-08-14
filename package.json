@@ -18,7 +18,8 @@
     "d": "~0.1.1",
     "es5-ext": "~0.10.4",
     "es6-template-strings": "0.1.x",
-    "esniff": "git://github.com/medikoo/esniff.git"
+    "esniff": "git://github.com/medikoo/esniff.git",
+		"memoizee": "0.3.x"
   },
   "devDependencies": {
     "xlint": "~0.2.1",
