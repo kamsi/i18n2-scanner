@@ -1,15 +1,22 @@
 'use strict';
 
-var fs = require('fs');
+var fs = require('fs')
+  , deferred = require('deferred')
+  , promisify = deferred.promisify
+  , readFile = promisify(fs.readFile);
 
 module.exports = function (t, a, d) {
-	fs.readFile('test/__playground/view_example.js',
-		function (err, example) {
-			if (err) throw err;
-			fs.readFile('test/__playground/view_example_output.json',
-				function (err2, output) {
-					if (err2) throw err2;
-					d(a.deep(t(example), JSON.parse(String(output))));
-				});
-		});
+	var testFilePaths = ['test/__playground/view_example.js',
+		'test/__playground/view_example_2.js'];
+
+	deferred.map(testFilePaths, function (path) {
+		return deferred(readFile(path),
+			readFile(path.replace(/_?\.js$/, '_output.json'))).then(
+			function (result) {
+				a.deep(t(result[0]), JSON.parse(String(result[1])));
+			}
+		);
+	}).done(function (res) {
+		d();
+	}, d);
 };
