@@ -19,7 +19,7 @@
     "es5-ext": "~0.10.4",
     "es6-template-strings": "0.1.x",
     "esniff": "git://github.com/medikoo/esniff.git",
-    "memoizee": "0.3.x",
+    "memoizee": "~0.3.6",
     "deferred": "0.7.x"
   },
   "devDependencies": {

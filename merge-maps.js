@@ -1,26 +1,25 @@
 'use strict';
 
-var forEach = require('es5-ext/object/for-each');
+var forEach = require('es5-ext/object/for-each')
+  , assign  = require('es5-ext/object/assign');
 
 module.exports = function (sourceScanResults) {
-	var result = {}, resultMsgObject;
-	forEach(sourceScanResults, function (scanRes, scanResKey) {
-		if (!scanRes.messages) {
+	var result = Object.create(null), resultMsgObject;
+	forEach(sourceScanResults, function (meta, location) {
+		if (!meta.messages) {
 			return;
 		}
-		forEach(scanRes.messages, function (msg, msgKey) {
+		forEach(meta.messages, function (msg, msgKey) {
 			if (!result[msgKey]) {
-				result[msgKey] = {};
+				result[msgKey] = Object.create(null);
 			}
-			if (!result[msgKey][scanRes.context]) {
-				result[msgKey][scanRes.context] = [];
+			if (!result[msgKey][meta.context]) {
+				result[msgKey][meta.context] = [];
 			}
 			msg.forEach(function (msgMetaDesc) {
-				resultMsgObject = { fileName: scanResKey };
-				forEach(msgMetaDesc, function (value, key) {
-					resultMsgObject[key] = value;
-				});
-				result[msgKey][scanRes.context].push(resultMsgObject);
+				resultMsgObject = { fileName: location };
+				assign(resultMsgObject, msgMetaDesc);
+				result[msgKey][meta.context].push(resultMsgObject);
 			});
 		});
 	});
