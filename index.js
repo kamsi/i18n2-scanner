@@ -5,11 +5,10 @@ var validValue         = require('es5-ext/object/valid-value')
   , esniffFun          = require('esniff/function')
   , esniffFun_         = esniffFun('_')
   , esniffResolveArgs  = require('esniff/resolve-arguments')
-  , isStringLiteral    = require('esniff/is-string-literal')
   , stripComments      = require('esniff/strip-comments')
   , customError        = require('es5-ext/error/custom')
   , getESniffFun
-  , resolveStringLiteral
+  , evaluateParam
   , extractArguments
   , resolveMessage;
 
@@ -17,15 +16,15 @@ getESniffFun = memoize(function (prefix) {
 	return esniffFun(prefix + ".bind", { asProperty: true });
 });
 
-resolveStringLiteral = function (stringLiteral, esniffResult) {
-	stringLiteral = stripComments(stringLiteral).trim();
-	if (!isStringLiteral(stringLiteral)) {
-		throw customError("Invalid invocation with param: " +
-				JSON.stringify(stringLiteral) + " for the following params: "
-				+ JSON.stringify(esniffResult),
-			"INVALID_INVOCATION_PARAM_NOT_STRING");
+evaluateParam = function (param) {
+	param = stripComments(param).trim();
+	try {
+		param = new Function("'use strict'; return " + param)();
+	} catch (e) {
+		param = "";
+		console.error(e);
 	}
-	return new Function("'use strict'; return " + stringLiteral)();
+	return param;
 };
 
 extractArguments = function (esniffResult) {
@@ -40,9 +39,9 @@ extractArguments = function (esniffResult) {
 
 resolveMessage = function (esniffResult) {
 	var args = extractArguments(esniffResult);
-	args[0] = resolveStringLiteral(args[0], esniffResult);
+	args[0] = evaluateParam(args[0]);
 	if (args.length > 2) { //plural
-		args[1] = resolveStringLiteral(args[1], esniffResult);
+		args[1] = evaluateParam(args[1]);
 		return 'n\0' + args[0] + '\0' + args[1];
 	}
 	return args[0];
@@ -57,7 +56,7 @@ module.exports = function (source/*, options*/) {
 	context = getESniffFun(i18Prefix)(source);
 	if (context[0] && context[0].raw) {
 		args = extractArguments(context[0]);
-		result.context = resolveStringLiteral(args[0], context[0]);
+		result.context = evaluateParam(args[0]);
 	} else {
 		result.context = 'default';
 	}
