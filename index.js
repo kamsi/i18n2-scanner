@@ -24,7 +24,7 @@ evaluateParam = function (param) {
 		param = "";
 		console.error(e);
 	}
-	return param;
+	return param.trim();
 };
 
 extractArguments = function (esniffResult) {
