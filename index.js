@@ -6,6 +6,8 @@ var validValue         = require('es5-ext/object/valid-value')
   , esniffFun_         = esniffFun('_')
   , esniffResolveArgs  = require('esniff/resolve-arguments')
   , stripComments      = require('esniff/strip-comments')
+  , resolveConcat      = require('esniff/resolve-concat')
+  , validStringLiteral = require('esniff/valid-string-literal')
   , customError        = require('es5-ext/error/custom')
   , getESniffFun
   , evaluateParam
@@ -16,14 +18,19 @@ getESniffFun = memoize(function (prefix) {
 	return esniffFun(prefix + ".bind", { asProperty: true });
 });
 
-evaluateParam = function (param) {
-	param = stripComments(param).trim();
-	try {
-		param = new Function("'use strict'; return " + param)();
-	} catch (e) {
-		param = "";
-		console.error(e);
-	}
+evaluateParam = function (param, esniffRes) {
+	param = resolveConcat(param).map(function (str) {
+		try {
+			return validStringLiteral(stripComments(str).trim());
+		} catch (e) {
+			throw customError('Wrong i18n invocation, expected string param, got: '
+				+ str + ', esniff result: ' + JSON.stringify(esniffRes),
+				'I18N_WRONG_INVOCATION', { esniffResult: esniffRes });
+		}
+	}).join('+');
+
+	param = new Function("'use strict'; return " + param)();
+
 	return param.trim();
 };
 
@@ -39,9 +46,9 @@ extractArguments = function (esniffResult) {
 
 resolveMessage = function (esniffResult) {
 	var args = extractArguments(esniffResult);
-	args[0] = evaluateParam(args[0]);
+	args[0] = evaluateParam(args[0], esniffResult);
 	if (args.length > 2) { //plural
-		args[1] = evaluateParam(args[1]);
+		args[1] = evaluateParam(args[1], esniffResult);
 		return 'n\0' + args[0] + '\0' + args[1];
 	}
 	return args[0];
@@ -56,7 +63,7 @@ module.exports = function (source/*, options*/) {
 	context = getESniffFun(i18Prefix)(source);
 	if (context[0] && context[0].raw) {
 		args = extractArguments(context[0]);
-		result.context = evaluateParam(args[0]);
+		result.context = evaluateParam(args[0], context[0]);
 	} else {
 		result.context = 'default';
 	}
