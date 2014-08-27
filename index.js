@@ -24,7 +24,8 @@ evaluateParam = function (param, esniffRes) {
 			return validStringLiteral(stripComments(str).trim());
 		} catch (e) {
 			throw customError('Wrong i18n invocation, expected string param, got: '
-				+ str + ', esniff result: ' + JSON.stringify(esniffRes));
+				+ str + ', esniff result: ' + JSON.stringify(esniffRes),
+				'I18N_WRONG_INVOCATION', { esniffResult: esniffRes });
 		}
 	}).join('+');
 
