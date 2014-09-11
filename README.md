@@ -7,20 +7,20 @@
 
 ### Description
 
-Scanner is used to parse source (using [esniff](https://github.com/medikoo/esniff)) code and search for occurrences of _ function.
+Scanner is used to parse source (using [esniff](https://github.com/medikoo/esniff)) code and search for occurrences of `_` function.
 It produces json parsable structure with all the messages found in the code.
 
 
 ### Structure
 
-The i18n2-scanner constists of [index.js](https://github.com/kamsi/i18n2-scanner/blob/master/README.md#indexjs) (main module) and [merge-maps](https://github.com/kamsi/i18n2-scanner/blob/master/README.md#merge-mapsjs) (module for merging scanner results). The scanner itself ([index.js] (https://github.com/kamsi/i18n2-scanner/blob/master/README.md#indexjs)) takes source parameter and an optional options object.
+The i18n2-scanner constists of [index.js](#indexjs) (main module) and [merge-maps](https://github.com/kamsi/i18n2-scanner/blob/master/README.md#merge-mapsjs) (module for merging scanner results). The scanner itself ([index.js] (https://github.com/kamsi/i18n2-scanner/blob/master/README.md#indexjs)) takes source parameter and an optional options object.
 The source parameter is assumed to be content of a JavaScript file.
 The options parameter may contain i18Prefix field in which a string can be given. The i18Prefix can be used to specify the name of the i18n object (default _i18n_).
 
 ### Usage
 
 #### index.js
-Scanner is meant to parse content of JavaScript files and extract the language keys with some meta information about them (for example key's location in files). The scanner assumes that the i18n function is named _\__. The standard usage would be to feed file contents of a a file that may use _\__ function to scanner (index.js). Scanner will return an object of the form:
+Scanner is meant to parse content of JavaScript files and extract the language keys with some meta information about them (for example key's location in files). The scanner assumes that the i18n function is named `_`. The standard usage would be to feed file contents of a a file that may use `_` function to scanner (index.js). Scanner will return an object of the form:
 ```javascript
 {
  context: "context name",
@@ -28,9 +28,11 @@ Scanner is meant to parse content of JavaScript files and extract the language k
   "n\u0000Singular\u0000Plural":[{"point":455,"line":12,"column":70}],
   "Regular Key":[{"point":825,"line":22,"column":70}],
   "Some other key":[{"point":1027,"line":29,"column":26}]
+  }
+}
 ```
 #### merge-maps.js
-If we have many contexts and many files in which _\_ function appears, we can create a more useful map by gathering all the particular scanner results in a map of the form:
+If we have many contexts and many files in which `_` function appears, we can create a more useful map by gathering all the particular scanner results in a map of the form:
 
 ```javascript
 {
@@ -58,7 +60,7 @@ We can use such map as an input for merge-maps. The merge-maps will produce the 
   }
 }
 ```
-So the merge-maps module groups scanner results by language keys, then by context and gives information on where a specific _ function (or i18n method in case of contexts) invocation has ocurred.
+So the merge-maps module groups scanner results by language keys, then by context and gives information on where a specific `_` function (or i18n method in case of contexts) invocation has ocurred.
 
 
 ## Tests [![Build Status](https://travis-ci.org/kamsi/i18n2-scanner.svg)](https://travis-ci.org/kamsi/i18n2-scanner)
