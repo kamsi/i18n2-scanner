@@ -56,7 +56,7 @@ We can use such map as an input for merge-maps. The merge-maps will produce the 
   }
 }
 ```
-So the merge-maps module groups scanner results by language keys, then by context and gives information on where a specific _ function (or method) invocation has ocurred.
+So the merge-maps module groups scanner results by language keys, then by context and gives information on where a specific _ function (or i18n method in case of contexts) invocation has ocurred.
 
 
 ## Tests [![Build Status](https://travis-ci.org/kamsi/i18n2-scanner.svg)](https://travis-ci.org/kamsi/i18n2-scanner)
