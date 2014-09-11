@@ -8,13 +8,13 @@
 ### Description
 
 Scanner is used to parse source (using [esniff](https://github.com/medikoo/esniff)) code and search for occurrences of _ function.
-It produces json with all the messages found in the code.
+It produces json parsable structure with all the messages found in the code.
 
 
 ## Structure
 
-The i18n2-scanner has constists of index.js (main module) and merge-maps (module for merging scanner results). The scanner itself (index.js) takes source parameter and an optional options object.
-The source param is assumed to be content of a JavaScript file.
+The i18n2-scanner constists of index.js (main module) and merge-maps (module for merging scanner results). The scanner itself (index.js) takes source parameter and an optional options object.
+The source parameter is assumed to be content of a JavaScript file.
 The options parameter may contain i18Prefix field in which a string can be given. The i18Prefix can be used to specify the name of the i18n object (default _i18n_).
 
 ## Usage
