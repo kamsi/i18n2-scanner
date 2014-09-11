@@ -13,7 +13,7 @@ It produces json parsable structure with all the messages found in the code.
 
 ### Structure
 
-The i18n2-scanner constists of [index.js](#indexjs) (main module) and [merge-maps](https://github.com/kamsi/i18n2-scanner/blob/master/README.md#merge-mapsjs) (module for merging scanner results). The scanner itself ([index.js] (https://github.com/kamsi/i18n2-scanner/blob/master/README.md#indexjs)) takes source parameter and an optional options object.
+The i18n2-scanner constists of [index.js](#indexjs) (main module) and [merge-maps](#merge-mapsjs) (module for merging scanner results). The scanner itself ([index.js](#indexjs)) takes source parameter and an optional options object.
 The source parameter is assumed to be content of a JavaScript file.
 The options parameter may contain i18Prefix field in which a string can be given. The i18Prefix can be used to specify the name of the i18n object (default _i18n_).
 
