@@ -19,6 +19,7 @@ The options parameter may contain i18Prefix field in which a string can be given
 
 ### Usage
 
+#### index.js
 Scanner is meant to parse content of JavaScript files and extract the language keys with some meta information about them (for example key's location in files). The scanner assumes that the i18n function is named _\__. The standard usage would be to feed file contents of a a file that may use _\__ function to scanner (index.js). Scanner will return an object of the form:
 ```javascript
 {
@@ -28,6 +29,7 @@ Scanner is meant to parse content of JavaScript files and extract the language k
   "Regular Key":[{"point":825,"line":22,"column":70}],
   "Some other key":[{"point":1027,"line":29,"column":26}]
 ```
+#### merge-maps.js
 If we have many contexts and many files in which _\_ function appears, we can create a more useful map by gathering all the particular scanner results in a map of the form:
 
 ```javascript
