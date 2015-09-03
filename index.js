@@ -7,7 +7,7 @@ var validValue         = require('es5-ext/object/valid-value')
   , esniffResolveArgs  = require('esniff/resolve-arguments')
   , stripComments      = require('esniff/strip-comments')
   , resolveConcat      = require('esniff/resolve-concat')
-  , validStringLiteral = require('esniff/valid-string-literal')
+  , validStringLiteral = require('esniff/ensure-string-literal')
   , customError        = require('es5-ext/error/custom')
   , getESniffFun
   , evaluateParam
